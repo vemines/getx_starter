@@ -1,0 +1,11 @@
+{
+  "name": "Tiếng Việt",
+  "code": "vi_VN",
+  "texts": {
+    "hello": "Xin chào ",
+    "param": "Tham số là \"@param\"",
+    "nested": {
+      "key1": "Khóa lồng ghép 1"
+    }
+  }
+}

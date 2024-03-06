@@ -1,0 +1,11 @@
+{
+  "name": "English",
+  "code": "en_US",
+  "texts": {
+    "hello": "Welcome",
+    "param": "Param is \"@param\"",
+    "nested": {
+      "key1": "Nested key 1"
+    }
+  }
+}

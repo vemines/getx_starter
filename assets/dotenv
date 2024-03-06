@@ -1,0 +1,4 @@
+DESKTOP=1500
+TABLET=1000
+MOBILE=600
+POST_BASEURL=https://jsonplaceholder.typicode.com

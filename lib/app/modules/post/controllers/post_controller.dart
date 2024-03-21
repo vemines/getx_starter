@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:get/get.dart';
 
 import '../../../data/models/post_model.dart';
@@ -9,13 +11,21 @@ class PostController extends GetxController {
   Rxn<PostModel> post = Rxn<PostModel>();
 
   Future<void> loadPosts() async {
-    final result = await postRepository.fetchAllPosts();
-    if (result.isNotEmpty) posts.value = result;
+    try {
+      final result = await postRepository.fetchAllPosts();
+      if (result.isNotEmpty) posts.value = result;
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 
   Future<void> loadPost(String id) async {
     post = Rxn<PostModel>();
-    final result = await postRepository.fetchOnePost(id);
-    post.value = result;
+    try {
+      final result = await postRepository.fetchOnePost(id);
+      post.value = result;
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 }

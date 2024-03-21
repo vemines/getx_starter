@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
+import 'initial_binding.dart';
 import 'app/shared/theme/app_theme.dart';
 import 'app/shared/translations/translations.dart';
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      initialBinding: InitialBinding(),
       // Routes
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

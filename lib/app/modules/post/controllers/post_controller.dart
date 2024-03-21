@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:getx_starter/app/data/repositories/post_repository.dart';
 
 import '../../../data/models/post_model.dart';
+import '../../../data/repositories/post_repository.dart';
 
 class PostController extends GetxController {
-  PostRepository postRepository = PostRepository();
+  PostRepository postRepository = PostRepository.instance;
   RxList<PostModel> posts = <PostModel>[].obs;
   Rxn<PostModel> post = Rxn<PostModel>();
 

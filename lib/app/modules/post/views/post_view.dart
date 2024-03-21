@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:getx_starter/app/routes/app_pages.dart';
-import '../../../data/models/post_model.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/post_controller.dart';
 import 'widgets/post.dart';
 

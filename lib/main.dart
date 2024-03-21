@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
-import 'app/shared/helpers/hive_helper.dart';
 import 'app/shared/theme/app_theme.dart';
 import 'app/shared/translations/translations.dart';
 
@@ -11,7 +10,6 @@ Future<void> main() async {
   // init languages
   await AppLanguage.initLanguages();
   // init hive
-  await HiveStorageHelper.instance.init();
   runApp(const MyApp());
 }
 

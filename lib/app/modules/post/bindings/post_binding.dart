@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../data/providers/post_provider.dart';
+import '../../../data/repositories/post_repository.dart';
 import '../controllers/post_controller.dart';
 
 class PostBinding implements Bindings {
@@ -8,6 +8,6 @@ class PostBinding implements Bindings {
   void dependencies() {
     Get.lazyPut(() => PostController());
     // permanent: true prevert delete drom memory
-    Get.put<PostProvider>(PostProvider.instance, permanent: true);
+    Get.put<PostRepository>(PostRepository.instance, permanent: true);
   }
 }

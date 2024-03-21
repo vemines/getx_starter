@@ -9,7 +9,6 @@ dependencies:
   get: 4.6.6
   flutter:
     sdk: flutter
-  hive: ^2.2.3
   gap: ^3.0.1
 
 dev_dependencies:

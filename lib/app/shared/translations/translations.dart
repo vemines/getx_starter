@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
-import '../extensions/string_extension.dart';
+
 import '../utils/flatten_map.dart';
 
 class AppLanguage extends Translations {
@@ -23,7 +23,7 @@ class AppLanguage extends Translations {
   static Future<Map<String, Map<String, String>>> registerLanguage(
     String languageCode,
   ) async {
-    final res = await rootBundle.loadString('assets/lang/$languageCode.json'.prefixAssets());
+    final res = await rootBundle.loadString('assets/lang/$languageCode.json');
     Map<String, dynamic> json = jsonDecode(res);
     final i18 = I18nModel.fromJson(json);
     return {i18.code!: i18.texts!};

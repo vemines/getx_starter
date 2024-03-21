@@ -1,31 +1,38 @@
 import 'dart:convert';
 
-import 'package:hive/hive.dart';
+import 'package:get/get_connect.dart';
 
 import '../models/post_model.dart';
-import '../providers/post_provider.dart';
 
-class PostRepository {
-  String postKey = "posts";
+class PostRepository extends GetConnect {
+  // Make it singleton and let root bindings put it and make permanent: true
+  PostRepository._();
+  static final instance = PostRepository._();
 
+  @override
+  void onInit() {
+    super.onInit();
+    httpClient.baseUrl = "https://jsonplaceholder.typicode.com";
+
+    httpClient.addRequestModifier<void>((request) async {
+      request.headers['content-type'] = 'application/json';
+      return request;
+    });
+
+    httpClient.addResponseModifier((request, response) async {
+      return response;
+    });
+  }
+
+  final String postKey = "posts";
   Future<List<PostModel>> fetchAllPosts() async {
-    var box = await Hive.openBox<PostModel>(postKey);
-    // test cache object with hive
-
-    if (box.values.isNotEmpty) {
-      return box.values.toList();
-    }
-
-    final response = await PostProvider.instance.fetchPosts();
+    final response = await get("/posts");
     if (response.statusCode == 200) {
       final body = response.bodyString!;
       // Convert body to list posts
       final List<dynamic> jsonList = json.decode(body);
       final List<PostModel> posts = jsonList.map((i) {
         final model = PostModel.fromJson(i);
-        // add model to hive
-        box.add(model);
-
         return model;
       }).toList();
       // If the request is successful, return the list of PostModel
@@ -37,22 +44,11 @@ class PostRepository {
   }
 
   Future<PostModel?> fetchOnePost(String id) async {
-    // var box = await Hive.openBox<PostModel>("post/$id");
-    // // test cache object with hive
-    // if (!Hive.isAdapterRegistered(PostAdapter().typeId)) {
-    //   Hive.registerAdapter(PostAdapter());
-    // }
-
-    // if (box.values.isNotEmpty) {
-    //   return box.values.last;
-    // }
-
-    final response = await PostProvider.instance.fetchPost(id);
+    final response = await httpClient.get("/posts/$id");
     if (response.statusCode == 200) {
       final body = response.bodyString!;
       // Convert body to list posts
       final PostModel post = PostModel.fromJson(json.decode(body));
-      // box.add(post);
       // If the request is successful, return PostModel
       return post;
     } else {

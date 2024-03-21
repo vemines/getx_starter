@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_starter/app/shared/constants/dimens.dart';
-import 'package:getx_starter/app/shared/constants/values.dart';
-import 'package:getx_starter/app/shared/extensions/string_extension.dart';
+import '../../shared/constants/dimens.dart';
+import '../../shared/constants/values.dart';
 
 import '../../routes/app_pages.dart';
 import '../../shared/theme/theme_extension.dart';
@@ -32,7 +31,7 @@ class PreviewScreen extends StatelessWidget {
         child: ListView(
           shrinkWrap: true,
           children: [
-            Image.asset("assets/jpg/sample.jpeg".prefixAssets()),
+            Image.asset("assets/jpg/sample.jpeg"),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [

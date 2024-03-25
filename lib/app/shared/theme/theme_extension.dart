@@ -48,8 +48,10 @@ class CustomColors extends ThemeExtension<CustomColors> {
     // check instance
     if (other is! CustomColors) return this;
 
-    colorTheme.setWarning(lerpColor(colorTheme.warning, other.colorTheme.warning, t));
-    colorTheme.setSuccess(lerpColor(colorTheme.success, other.colorTheme.success, t));
+    colorTheme
+        .setWarning(lerpColor(colorTheme.warning, other.colorTheme.warning, t));
+    colorTheme
+        .setSuccess(lerpColor(colorTheme.success, other.colorTheme.success, t));
     colorTheme.setInfo(lerpColor(colorTheme.info, other.colorTheme.info, t));
 
     return this;

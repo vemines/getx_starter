@@ -15,15 +15,13 @@ class PreviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = context.textTheme;
-    var colorTheme = context.theme.colorScheme;
-    var colorExtTheme = context.theme.extension<CustomColors>()!;
+    var colorScheme = context.theme.colorScheme;
 
     return Scaffold(
-      backgroundColor: colorTheme.background,
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        title: Text("Preview", style: textTheme.headlineMedium!.copyWith(color: colorTheme.onPrimary)),
+        title: const Text("Preview"),
         centerTitle: true,
-        backgroundColor: colorTheme.primary,
       ),
       body: Container(
         padding: const EdgeInsets.all(Dimensions.normal),
@@ -37,22 +35,21 @@ class PreviewScreen extends StatelessWidget {
               children: [
                 FilledButton(
                   style: const ButtonStyle(
-                    padding: MaterialStatePropertyAll(EdgeInsets.all(Dimensions.normal)),
+                    padding: MaterialStatePropertyAll(
+                        EdgeInsets.all(Dimensions.normal)),
                   ),
                   onPressed: () => Get.toNamed(Routes.posts),
-                  child: Text("Go Post Page", style: textTheme.labelLarge!.copyWith(color: colorTheme.onPrimary)),
+                  child: Text("Go Post Page",
+                      style: textTheme.labelLarge!
+                          .copyWith(color: colorScheme.onPrimary)),
                 ),
               ],
             ),
-            TextThemePreview(textTheme: textTheme),
+            const _TextThemePreview(),
             gapL(),
-            _ColorPreview(
-              colorTheme: colorTheme,
-              colorExtTheme: colorExtTheme.colorTheme,
-              textTheme: textTheme,
-            ),
+            const _ColorPreview(),
             gapL(),
-            _TranslatePreview(textTheme: textTheme, colorTheme: colorTheme),
+            const _TranslatePreview(),
           ],
         ),
       ),
@@ -61,9 +58,7 @@ class PreviewScreen extends StatelessWidget {
 }
 
 class _TranslatePreview extends StatefulWidget {
-  const _TranslatePreview({required this.textTheme, required this.colorTheme});
-  final TextTheme textTheme;
-  final ColorScheme colorTheme;
+  const _TranslatePreview();
 
   @override
   State<_TranslatePreview> createState() => _TranslatePreviewState();
@@ -82,32 +77,35 @@ class _TranslatePreviewState extends State<_TranslatePreview> {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = context.textTheme;
+    var colorScheme = context.theme.colorScheme;
     return Column(
       children: [
-        Text("Normal Text", style: widget.textTheme.headlineSmall),
+        Text("Normal Text", style: textTheme.headlineSmall),
         gapS(),
-        Text(LocaleKeys.hello.tr, style: widget.textTheme.bodyLarge),
+        Text(LocaleKeys.hello.tr, style: textTheme.bodyLarge),
         gapN(),
-        Text("Param Text", style: widget.textTheme.headlineSmall),
+        Text("Param Text", style: textTheme.headlineSmall),
         gapS(),
-        Text(LocaleKeys.param.trParams({"param": "VeMines"}), style: widget.textTheme.bodyLarge),
+        Text(LocaleKeys.param.trParams({"param": "VeMines"}),
+            style: textTheme.bodyLarge),
         gapN(),
-        Text("Nested Text", style: widget.textTheme.headlineSmall),
+        Text("Nested Text", style: textTheme.headlineSmall),
         gapS(),
-        Text(LocaleKeys.nestedKey1.tr, style: widget.textTheme.bodyLarge),
+        Text(LocaleKeys.nestedKey1.tr, style: textTheme.bodyLarge),
         gapN(),
         Container(
           width: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(RadiusBorder.normal),
-            color: widget.colorTheme.surface,
+            color: colorScheme.surface,
           ),
           child: DropdownButton<String>(
             iconSize: 30,
             isExpanded: true,
             borderRadius: BorderRadius.circular(RadiusBorder.normal),
-            focusColor: widget.colorTheme.surface,
-            dropdownColor: widget.colorTheme.surface,
+            focusColor: colorScheme.surface,
+            dropdownColor: colorScheme.surface,
             underline: const DropdownButtonHideUnderline(child: SizedBox()),
             value: currentLanguage,
             items: supportLanguages.entries.map((entry) {
@@ -116,8 +114,8 @@ class _TranslatePreviewState extends State<_TranslatePreview> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(entry.key, style: widget.textTheme.bodyLarge),
-                    Text(entry.value, style: widget.textTheme.bodyLarge),
+                    Text(entry.key, style: textTheme.bodyLarge),
+                    Text(entry.value, style: textTheme.bodyLarge),
                   ],
                 ),
               );
@@ -130,60 +128,71 @@ class _TranslatePreviewState extends State<_TranslatePreview> {
   }
 }
 
-class _ColorPreview extends StatelessWidget {
-  const _ColorPreview({
-    required this.colorExtTheme,
-    required this.textTheme,
-    required this.colorTheme,
-  });
-  final ColorThemeExt colorExtTheme;
-  final TextTheme textTheme;
-  final ColorScheme colorTheme;
-
-  Widget _buildColor(String name, Color color) => SizedBox(
-        width: 200,
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          alignment: WrapAlignment.spaceBetween,
-          children: [
-            Text(name, style: textTheme.bodyLarge),
-            Container(width: 100, height: 100, color: color),
-          ],
-        ),
-      );
+class _ColorWidget extends StatelessWidget {
+  const _ColorWidget(this.name, this.color);
+  final String name;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = context.textTheme;
+    return SizedBox(
+      width: 200,
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        alignment: WrapAlignment.spaceBetween,
+        children: [
+          Text(name, style: textTheme.bodyLarge),
+          Container(width: 100, height: 100, color: color),
+        ],
+      ),
+    );
+  }
+}
+
+class _ColorPreview extends StatelessWidget {
+  const _ColorPreview();
+
+  @override
+  Widget build(BuildContext context) {
+    var textTheme = context.textTheme;
+    var colorScheme = context.theme.colorScheme;
+    var colorThemeExt = context.theme.extension<ColorThemeExt>()!;
     return Column(
       children: [
         Wrap(
           runSpacing: Dimensions.normal,
           spacing: Dimensions.normal,
           children: [
-            _buildColor("Info (theme extends)", colorExtTheme.info),
-            _buildColor("Warning (theme extends)", colorExtTheme.warning),
-            _buildColor("Success (theme extends)", colorExtTheme.success),
+            _ColorWidget("Info (theme extends)", colorThemeExt.info),
+            _ColorWidget("Warning (theme extends)", colorThemeExt.warning),
+            _ColorWidget("Success (theme extends)", colorThemeExt.success),
           ],
         ),
         gapN(),
         FilledButton(
           style: const ButtonStyle(
-            padding: MaterialStatePropertyAll(EdgeInsets.all(Dimensions.normal)),
+            padding:
+                MaterialStatePropertyAll(EdgeInsets.all(Dimensions.normal)),
           ),
-          onPressed: () => Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark),
-          child: Text("Change Theme mode", style: textTheme.labelLarge!.copyWith(color: colorTheme.onPrimary)),
+          onPressed: () => Get.changeThemeMode(
+              Get.isDarkMode ? ThemeMode.light : ThemeMode.dark),
+          child: Text("Change Theme mode",
+              style:
+                  textTheme.labelLarge!.copyWith(color: colorScheme.onPrimary)),
         ),
       ],
     );
   }
 }
 
-class TextThemePreview extends StatelessWidget {
-  const TextThemePreview({required this.textTheme, super.key});
-  final TextTheme textTheme;
+class _TextThemePreview extends StatelessWidget {
+  const _TextThemePreview();
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = context.textTheme;
+
     return Column(
       children: [
         Text("Display Large", style: textTheme.displayLarge),
